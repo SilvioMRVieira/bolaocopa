@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('boloes', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->text('descricao')->nullable();
+            $table->unsignedBigInteger('id_admin');
+            $table->boolean('ativo')->default(true);
+            $table->timestamps();
+
+            $table->foreign('id_admin')->references('id')->on('users')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('boloes');
+    }
+};
